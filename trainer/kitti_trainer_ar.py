@@ -28,7 +28,8 @@ class TrainFramework(BaseTrainer):
         self.model.train()
         end = time.time()
 
-        if 'stage1' in self.cfg:
+        # without augmenting transformation
+        if 'stage1' in self.cfg: 
             if self.i_epoch == self.cfg.stage1.epoch:
                 self.loss_func.cfg.update(self.cfg.stage1.loss)
 
@@ -55,10 +56,10 @@ class TrainFramework(BaseTrainer):
                 img1, img2 = data['img1_ph'].to(self.device), data['img2_ph'].to(
                     self.device)
 
-                # construct augment sample
+                # construct augment sample by spatial transformation
                 noc_ori = self.loss_func.pyramid_occu_mask1[0]  # non-occluded region
                 s = {'imgs': [img1, img2], 'flows_f': [flow_ori], 'masks_f': [noc_ori]}
-                st_res = self.sp_transform(deepcopy(s)) if self.cfg.run_st else deepcopy(s)
+                st_res = self.sp_transform(deepcopy(s)) if self.cfg.run_st else deepcopy(s) # transformed image,flow,mask
                 flow_t, noc_t = st_res['flows_f'][0], st_res['masks_f'][0]
 
                 # run 2nd pass
