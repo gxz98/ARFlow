@@ -53,9 +53,9 @@
            "pretrained_model": "./checkpoints/KITTI15/pwclite_raw.tar",
            "print_freq": 10,
            "record_freq": 50,
-           "run_atst": true,
-           "run_ot": false,
-           "run_st": true,
+           "run_atst": true,  # appearance + spatial transformation
+           "run_ot": false,   # occlusion transformation
+           "run_st": true,    # spatial transformation
            "save_iter": 10000,
            "st_cfg": {"add_noise": true,
                       "hflip": true,
